@@ -3,10 +3,11 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab3Page } from './tab3.page';
+import { CheckServerPage } from './check-server.page';
+import { HttpClientModule} from '@angular/common/http'
 import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
-import { Tab3PageRoutingModule } from './tab3-routing.module';
+import { CheckServerPageRoutingModule } from './check-server-routing.module';
 
 @NgModule({
   imports: [
@@ -14,9 +15,8 @@ import { Tab3PageRoutingModule } from './tab3-routing.module';
     CommonModule,
     FormsModule,
     ExploreContainerComponentModule,
-    RouterModule.forChild([{ path: '', component: Tab3Page }]),
-    Tab3PageRoutingModule,
+    CheckServerPageRoutingModule, HttpClientModule
   ],
-  declarations: [Tab3Page]
+  declarations: [CheckServerPage]
 })
-export class Tab3PageModule {}
+export class CheckServerPageModule {}

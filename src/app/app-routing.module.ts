@@ -3,8 +3,21 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
+    path: 'index',
+    loadChildren: () => import('./scan-code/scan-code.module').then(m => m.ScanCodePageModule)
+  },
+  {
+    path: 'status-check',
+    loadChildren: () => import('./check-server/check-server.module').then(m => m.CheckServerPageModule)
+  },
+  {
+    path: 'summary',
+    loadChildren: () => import('./summary/summary.module').then(m => m.SummaryPageModule)
+  },
+  {
     path: '',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
+    redirectTo: '/index',
+    pathMatch: 'full'
   }
 ];
 @NgModule({
