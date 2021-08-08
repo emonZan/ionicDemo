@@ -1,5 +1,7 @@
-<ion-content [fullscreen]="true">
-  <ion-button color="dark" (click)="checkServerStatus()">Check Server Status</ion-button>
-  <p *ngIf='enableUpload'>Server: OK</p>
-  <ion-button color="dark" [disabled]="!enableUpload" (click)="takePhoto()">take photo & upload it</ion-button>
-</ion-content>
+<div class="content">
+  <div class="button-container">
+    <ion-button color="dark" (click)="checkServerStatus()">Check Server Status</ion-button>
+    <p *ngIf='enableUpload'>Server: OK</p>
+    <ion-button color="dark" [disabled]="!enableUpload" (click)="takePhoto()">take photo & upload it</ion-button>
+  </div>
+</div>

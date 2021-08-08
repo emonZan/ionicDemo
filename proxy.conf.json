@@ -1,0 +1,10 @@
+{
+    "/posts": {
+        "target": "be-app-hiring-bixinf-test.apps.bi-x-ire.tftp.p1.openshiftapps.com",
+        "secure": true,
+        "pathRewrite": {
+            "^/posts": ""
+        },
+        "changePrigin": true
+    }
+}

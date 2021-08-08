@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 
@@ -10,6 +10,7 @@ export class UploadService {
     statusCheckUrl = '/api/v1.0/status';
     getImageUrl = '/api/v1.0/ranking';
     uploadImageUrl = '/api/v1.0/ranking';
+    authParameter = ';user:admin;password:secret';
 
     constructor(private httpClient: HttpClient) { }
 
@@ -18,9 +19,15 @@ export class UploadService {
         return this.httpClient.get<StatusResponse>(url);
     }
 
-    uploadImage(request: UploadImageRequest): Observable<UploadImageResponse> {
-        const url = this.domainName + this.uploadImageUrl;
-        return this.httpClient.post<UploadImageResponse>(url, request);
+    uploadImage(request: UploadImageRequest): Observable<any> {
+        let options:any = {};
+        options.headers= new HttpHeaders({
+            'Access-Control-Allow-Origin': '*',
+            'RequestId': '123'
+        });
+        const url = this.domainName + this.uploadImageUrl + this.authParameter;
+        // const url = 'test';
+        return this.httpClient.post<any>(url, request, options);
     }
 
     getImage(): Observable<any> {
