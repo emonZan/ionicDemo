@@ -17,7 +17,7 @@ export class PhotoService {
       quality: 10
     });
     // Save the picture and add it to photo collection
-   return await this.readAsBase64(capturedPhoto);
+   return  await this.readAsBase64(capturedPhoto);
   }
 
 
