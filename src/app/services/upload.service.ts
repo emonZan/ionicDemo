@@ -11,7 +11,9 @@ export class UploadService {
     getImageUrl = '/api/v1.0/ranking';
     uploadImageUrl = '/api/v1.0/ranking';
     authParameter = ';user:admin;password:secret';
-
+    test=null;
+  serverInfo: any= null;
+private data =[];
     constructor(private httpClient: HttpClient) { }
 
     checkServerStatus(): Observable<StatusResponse> {
@@ -35,6 +37,13 @@ export class UploadService {
         return this.httpClient.get<any>(url);
     }
 
+    saveServerInfo(id,data){
+        this.data[id] = data;
+        console.log('??',this,this.serverInfo);
+    }
+    getServerInfo(id){
+        return this.data[id];
+    }
 }
 
 export class StatusResponse {

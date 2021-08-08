@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CheckServerPage } from './check-server.page';
 import { HttpClientModule} from '@angular/common/http'
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { CheckServerPageRoutingModule } from './check-server-routing.module';
 
@@ -14,7 +13,6 @@ import { CheckServerPageRoutingModule } from './check-server-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
     CheckServerPageRoutingModule, HttpClientModule
   ],
   declarations: [CheckServerPage]

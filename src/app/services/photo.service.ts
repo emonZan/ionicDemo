@@ -14,7 +14,7 @@ export class PhotoService {
     const capturedPhoto = await Camera.getPhoto({
       resultType: CameraResultType.Uri,
       source: CameraSource.Camera,
-      quality: 100
+      quality: 10
     });
     // Save the picture and add it to photo collection
    return await this.readAsBase64(capturedPhoto);

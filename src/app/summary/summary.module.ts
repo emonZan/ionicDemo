@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { SummaryPage } from './summary.page';
-import { ExploreContainerComponentModule } from '../explore-container/explore-container.module';
 
 import { SummaryPageRoutingModule } from './summary-routing.module';
 
@@ -13,7 +12,6 @@ import { SummaryPageRoutingModule } from './summary-routing.module';
     IonicModule,
     CommonModule,
     FormsModule,
-    ExploreContainerComponentModule,
     RouterModule.forChild([{ path: '', component: SummaryPage }]),
     SummaryPageRoutingModule,
   ],
