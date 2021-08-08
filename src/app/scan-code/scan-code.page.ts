@@ -34,7 +34,7 @@ export class ScanCodePage {
           // permission was denied, but not permanently. You can ask for permission again at a later time.
         }
       })
-      .catch((e: any) => alert(e));
+      .catch((e: any) => console.log(e));
 
   }
 }
