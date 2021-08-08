@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { SummaryPage } from './summary.page';
 
 import { SummaryPageRoutingModule } from './summary-routing.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { SummaryPageRoutingModule } from './summary-routing.module';
     FormsModule,
     RouterModule.forChild([{ path: '', component: SummaryPage }]),
     SummaryPageRoutingModule,
+    HttpClientModule
   ],
   declarations: [SummaryPage]
 })

@@ -2,6 +2,6 @@
   <div class="button-container">
     <ion-button color="dark" (click)="checkServerStatus()">Check Server Status</ion-button>
     <p *ngIf='enableUpload'>Server: OK</p>
-    <ion-button color="dark" [disabled]="!enableUpload" (click)="takePhtoto()">take photo & upload it</ion-button>
+    <ion-button color="dark" (click)="takePhtoto()" [disabled]="enableUpload">take photo & upload it</ion-button>
   </div>
 </div>

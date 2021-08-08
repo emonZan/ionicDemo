@@ -1,27 +1,23 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BarcodeScanner, BarcodeScannerOptions } from '@ionic-native/barcode-scanner/ngx';
-import { NavController } from '@ionic/angular';
 
-import { DataService } from '../services/data.service';
-import { UploadService } from '../services/upload.service';
+import { DataService, ServerInfo } from '../services/data.service';
 
 @Component({
   selector: 'app-scan-code',
   templateUrl: 'scan-code.page.html',
-  styleUrls: ['scan-code.page.scss'],
-  providers: [UploadService]
+  styleUrls: ['scan-code.page.scss']
 })
 export class ScanCodePage {
-  scannedData: any;
-  serverInfo: { domainName: string; userName: any; password: any; };
+  serverInfo: ServerInfo;
   constructor(
     private barcodeScanner: BarcodeScanner,
-    private navCtrl: NavController, private uploadService: UploadService,
     private router: Router,
     private dataService: DataService) {
 
   }
+
   scanBarcode() {
     const options: BarcodeScannerOptions = {
       preferFrontCamera: false,
@@ -34,18 +30,18 @@ export class ScanCodePage {
       orientation: 'portrait',
     };
     this.barcodeScanner.scan(options).then(barcodeData => {
-      console.log('Barcode data', barcodeData);
+      console.log('Barcode data11', barcodeData);
       const content = barcodeData.text;
-
       this.serverInfo = {
-        domainName: content.split(';')[0],
-        userName: content.matchAll(/;user:(\w+?);/g).next().value[1],
-        password: content.matchAll(/;secret:(\w+?);/g).next().value[1]
+        domainName: content.split(';')[0].substring('apiserver:'.length),
+        userName: content.split(';')[1].split(':')[1],
+        password: content.split(';')[2].split(':')[1]
       }
       this.dataService.saveData('serverInfo', this.serverInfo);
       this.router.navigateByUrl('/status-check');
     }).catch(err => {
-      console.log('Error', err);
+      // TODO: Handle error
+      console.log(err);
     });
   }
 }

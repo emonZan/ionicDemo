@@ -1,37 +1,38 @@
-import { HttpClient, HttpHandler, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
+import { DataService } from "./data.service";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UploadService {
-    domainName = 'https://be-app-hiring-bixinf-test.apps.bi-x-ire.tftp.p1.openshiftapps.com';
-    statusCheckUrl = '/api/v1.0/status';
-    getImageUrl = '/api/v1.0/ranking';
-    uploadImageUrl = '/api/v1.0/ranking';
-    authParameter = ';user:admin;password:secret';
-
-    constructor(private httpClient: HttpClient) { }
+    statusCheckUrl = 'api/v1.0/status';
+    getImageUrl = 'api/v1.0/image/';
+    uploadImageUrl = 'api/v1.0/ranking';
+    // domainName = 'https://be-app-hiring-bixinf-test.apps.bi-x-ire.tftp.p1.openshiftapps.com';
+    constructor(private httpClient: HttpClient,
+        private dataService: DataService) { }
 
     checkServerStatus(): Observable<StatusResponse> {
-        const url = this.domainName + this.statusCheckUrl;
+        const serverInfo = this.dataService.getData('serverInfo');
+        const url = serverInfo.domainName + this.statusCheckUrl;
         return this.httpClient.get<StatusResponse>(url);
     }
 
     uploadImage(request: UploadImageRequest): Observable<any> {
-        let options:any = {};
-        options.headers= new HttpHeaders({
-            'Access-Control-Allow-Origin': '*',
-            'RequestId': '123'
+        const serverInfo = this.dataService.getData('serverInfo');
+        let options: any = {};
+        options.headers = new HttpHeaders({
+            'Authorization': 'Basic ' + btoa(serverInfo.username + ":" + serverInfo.password)
         });
-        const url = this.domainName + this.uploadImageUrl + this.authParameter;
-        // const url = 'test';
+        const url = serverInfo.domainName + this.uploadImageUrl;
         return this.httpClient.post<any>(url, request, options);
     }
 
-    getImage(): Observable<any> {
-        const url = this.domainName + this.getImageUrl;
+    getImage(fileName): Observable<any> {
+        const serverInfo = this.dataService.getData('serverInfo');
+        const url = serverInfo.domainName + this.getImageUrl + fileName;
         return this.httpClient.get<any>(url);
     }
 }

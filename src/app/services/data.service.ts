@@ -13,3 +13,5 @@ export class DataService {
     return this.data[id];
   }
 }
+
+export class ServerInfo { domainName: string; userName: string; password: string; }

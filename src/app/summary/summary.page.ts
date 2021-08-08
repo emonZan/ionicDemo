@@ -1,20 +1,26 @@
 import { Component, OnInit } from '@angular/core';
+
+import { DataService } from '../services/data.service';
 import { UploadService } from '../services/upload.service';
 
 @Component({
   selector: 'app-summary',
   templateUrl: 'summary.page.html',
-  styleUrls: ['summary.page.scss']
+  styleUrls: ['summary.page.scss'],
+  providers: [DataService]
 })
 export class SummaryPage implements OnInit {
-
-  constructor(private uploadService: UploadService) { }
+  img = '';
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.getImage();
+    this.getImageUrl();
   }
-  getImage() {
-    this.uploadService.getImage().subscribe(data => {
-    })
+
+  getImageUrl() {
+    const serverInfo = this.dataService.getData('serverInfo');
+    const imageUrl = this.dataService.getData('imageUrl');
+    this.img = serverInfo.domainName + imageUrl;
   }
+
 }

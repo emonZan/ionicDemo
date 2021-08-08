@@ -1,9 +1,10 @@
 import { Base64 } from '@ionic-native/base64/ngx';
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Router } from '@angular/router';
+import { ImageResizer, ImageResizerOptions } from '@ionic-native/image-resizer/ngx';
 
 import { DataService } from '../services/data.service';
-import { PhotoService } from '../services/photo.service';
 import { UploadImageRequest, UploadService } from '../services/upload.service';
 
 @Component({
@@ -12,52 +13,75 @@ import { UploadImageRequest, UploadService } from '../services/upload.service';
   styleUrls: ['check-server.page.scss'],
   providers: [UploadService]
 })
-export class CheckServerPage implements OnInit {
+export class CheckServerPage{
   enableUpload = false;
-  serverInfo: any;
   constructor(private uploadService: UploadService,
     private camera: Camera,
     private base64: Base64,
-    private dataService: DataService) { }
+    private dataService: DataService,
+    private router: Router,
+    private imageResizer: ImageResizer) { }
 
-  ngOnInit() {
-    this.serverInfo = this.dataService.getData('serverInfo');
-  }
   checkServerStatus() {
     this.uploadService.checkServerStatus().subscribe(resp => {
       if (resp.status === 'ok') {
         this.enableUpload = true;
       }
-      console.log(resp);
+    }, err => {
+      // TODO: Handle error
+      console.log(err);
     });
   }
 
   takePhtoto() {
     const options: CameraOptions = {
-      quality: 10,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
+      quality: 50,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.PNG,
       mediaType: this.camera.MediaType.PICTURE,
     }
-
     this.camera.getPicture(options).then((imageData) => {
-      console.log('imageData', imageData);
-      // imageData is either a base64 encoded string or a file URI
+      // resize image
+      const options1 = {
+        uri: imageData,
+        folderName: 'pictures',
+        quality: 50,
+        width: 1280,
+        height: 1280
+      } as ImageResizerOptions;
+      this.imageResizer
+        .resize(options1)
+        .then((filePath: string) => {
+          // base64 encode image
+          this.encodeImage(filePath);
+        })
+        .catch(e => console.log(e));
     }, (err) => {
-      // Handle error
+      // TODO: Handle error
+      console.log(err);
     });
   }
 
-
-  private encodeAsBase64(filePath) {
-    console.log('bas', filePath);
-    this.base64.encodeFile(filePath).then((base64File: string) => {
-      // If it's base64 (DATA_URL):
-      const base64Image = 'data:image/jpeg;base64,' + base64File;
-      const request: UploadImageRequest = {
-        picture: base64Image
-      };
-    }, (err) => {
+  private encodeImage(resizedImageFilePath: string) {
+    this.base64.encodeFile(resizedImageFilePath)
+      .then((resizedImageBase64Str: string) => {
+        // upload image
+        this.uploadImage(resizedImageBase64Str);
+      }, (err) => {
+        // TODO: Handle error
+        console.log(err);
+      });
+  }
+  private uploadImage(imageBase64Str: string) {
+    const request: UploadImageRequest = {
+      picture: imageBase64Str
+    };
+    this.uploadService.uploadImage(request).subscribe(data => {
+      this.dataService.saveData('imageUrl', data.file);
+      this.router.navigateByUrl('/summary');
+    }, err => {
+      // TODO: Handle error
+      console.log('err', err);
     });
   }
 }
