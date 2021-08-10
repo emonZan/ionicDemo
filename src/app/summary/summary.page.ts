@@ -10,17 +10,18 @@ import { UploadService } from '../services/upload.service';
   providers: [DataService]
 })
 export class SummaryPage implements OnInit {
-  img = '';
-  constructor(private dataService: DataService) { }
+  serverImgUrl = '';
+  constructor(private dataService: DataService,
+    private uploadService: UploadService) { }
 
   ngOnInit() {
-    this.getImageUrl();
+    // this.getImageUrl();
   }
 
   getImageUrl() {
     const serverInfo = this.dataService.getData('serverInfo');
     const imageUrl = this.dataService.getData('imageUrl');
-    this.img = serverInfo.domainName + imageUrl;
+    this.serverImgUrl = serverInfo.domainName + this.uploadService.getImageUrl + imageUrl;
   }
 
 }

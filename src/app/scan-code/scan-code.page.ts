@@ -30,7 +30,6 @@ export class ScanCodePage {
       orientation: 'portrait',
     };
     this.barcodeScanner.scan(options).then(barcodeData => {
-      console.log('Barcode data11', barcodeData);
       const content = barcodeData.text;
       this.serverInfo = {
         domainName: content.split(';')[0].substring('apiserver:'.length),

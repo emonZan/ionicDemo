@@ -10,7 +10,9 @@ export class UploadService {
     statusCheckUrl = 'api/v1.0/status';
     getImageUrl = 'api/v1.0/image/';
     uploadImageUrl = 'api/v1.0/ranking';
-    // domainName = 'https://be-app-hiring-bixinf-test.apps.bi-x-ire.tftp.p1.openshiftapps.com';
+    // domainName = 'https://be-app-hiring-bixinf-test.apps.bi-x-ire.tftp.p1.openshiftapps.com/';
+    // username = 'admin';
+    // password ='secret';
     constructor(private httpClient: HttpClient,
         private dataService: DataService) { }
 
@@ -24,7 +26,7 @@ export class UploadService {
         const serverInfo = this.dataService.getData('serverInfo');
         let options: any = {};
         options.headers = new HttpHeaders({
-            'Authorization': 'Basic ' + btoa(serverInfo.username + ":" + serverInfo.password)
+            'Authorization': 'Basic ' + btoa(serverInfo.userName + ":" + serverInfo.password)
         });
         const url = serverInfo.domainName + this.uploadImageUrl;
         return this.httpClient.post<any>(url, request, options);

@@ -52,5 +52,11 @@
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>The camera is used to scan QR codes.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>The photo is used for camera</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>The photo is used for take photo</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 </dict>
 </plist>
