@@ -41,11 +41,10 @@ export class CheckServerPage{
     };
     this.uploadService.uploadImage(request).subscribe(data => {
       this.dataService.saveData('imageUrl', data.file);
-      console.log('imageUrl', data.file)
       this.router.navigateByUrl('/summary');
     }, err => {
       // TODO: Handle error
-      console.log('check status err', err);
+      console.log('err', err);
     });
   }
 }

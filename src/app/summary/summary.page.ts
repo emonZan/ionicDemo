@@ -7,7 +7,7 @@ import { UploadService } from '../services/upload.service';
   selector: 'app-summary',
   templateUrl: 'summary.page.html',
   styleUrls: ['summary.page.scss'],
-  providers: [DataService]
+  providers: [UploadService]
 })
 export class SummaryPage implements OnInit {
   serverImgUrl = '';
@@ -15,7 +15,7 @@ export class SummaryPage implements OnInit {
     private uploadService: UploadService) { }
 
   ngOnInit() {
-    // this.getImageUrl();
+    this.getImageUrl();
   }
 
   getImageUrl() {
