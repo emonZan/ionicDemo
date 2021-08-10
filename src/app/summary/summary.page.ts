@@ -15,13 +15,15 @@ export class SummaryPage implements OnInit {
     private uploadService: UploadService) { }
 
   ngOnInit() {
-    this.getImageUrl();
+    this.initImageUrl();
   }
 
-  getImageUrl() {
+  initImageUrl() {
     const serverInfo = this.dataService.getData('serverInfo');
     const imageUrl = this.dataService.getData('imageUrl');
-    this.serverImgUrl = serverInfo.domainName + this.uploadService.getImageUrl + imageUrl;
+    if (serverInfo && imageUrl) {
+      this.serverImgUrl = serverInfo.domainName + this.uploadService.getImageUrl + imageUrl;
+    }
   }
 
 }
