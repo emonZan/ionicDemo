@@ -32,7 +32,7 @@ export class UploadService {
         return this.httpClient.post<any>(url, request, options);
     }
 
-    getImage(fileName): Observable<any> {
+    getImage(fileName: string): Observable<any> {
         const serverInfo = this.dataService.getData('serverInfo');
         const url = serverInfo.domainName + this.getImageUrl + fileName;
         return this.httpClient.get<any>(url);

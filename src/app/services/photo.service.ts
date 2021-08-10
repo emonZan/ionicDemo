@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
-import { ImageResizer } from '@ionic-native/image-resizer/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,7 @@ import { ImageResizer } from '@ionic-native/image-resizer/ngx';
 export class PhotoService {
   photos: any;
 
-  constructor(private imageResizer: ImageResizer) { }
+  constructor() { }
 
   public async gePictureData() {
     // Take a photo
